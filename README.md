@@ -21,3 +21,7 @@ Jag vill förstår uppgyggnaden av en funktionerande app med flera användare. V
 
 Fortfarande osäker på hur jag ska lägga upp planeringen så jag återkommer med det
 Tekniker jag kommer använda mig av är typescript angular, java, ionic och open layers (kartor).
+
+frontend - ionic angular typescript
+backend - java springboot
+databas - mysql

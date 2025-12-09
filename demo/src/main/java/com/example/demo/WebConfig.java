@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedMethods("*")
             .allowedHeaders("*");
     }
-  }
+  };
   
   }
 }

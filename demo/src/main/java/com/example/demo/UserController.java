@@ -15,11 +15,14 @@ import com.example.demo.User;
 @CrossOrigin(origins = "http://localhost:8100")
 public class UserController {
   private final UserRepository repo;
-  public UserController(UserRepository repo){ this.repo = repo; }
+  public UserController(UserRepository repo){ 
+    this.repo = repo; }
 
   @GetMapping
-  public List<User> all(){ return repo.findAll(); }
+  public List<User> all(){ 
+    return repo.findAll(); }
 
-  @PostMapping
-  public User create(@RequestBody User u){ return repo.save(u); }
+  @PostMapping("/register")
+  public User create(@RequestBody User user){ 
+    return repo.save(user); }
 }

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name="users")
@@ -10,6 +11,7 @@ public class User {
     private Long id;
 
     private String name;
+    @Column(length = 255)
     private String password;
 
     // get and sett

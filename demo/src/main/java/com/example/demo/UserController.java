@@ -13,10 +13,15 @@ import com.example.demo.User;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:8100")
+
 public class UserController {
   private final UserRepository repo;
+  private final PasswordEncoder encoder;
+
   public UserController(UserRepository repo){ 
-    this.repo = repo; }
+    this.repo = repo; 
+    this.encoder = encoder;
+    }
 
   @GetMapping
   public List<User> all(){ 
@@ -24,5 +29,8 @@ public class UserController {
 
   @PostMapping("/register")
   public User create(@RequestBody User user){ 
+    //hashar
+    user.setPassword(encoder.encode(user.getPassword()));
+
     return repo.save(user); }
 }

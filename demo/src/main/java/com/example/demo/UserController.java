@@ -33,4 +33,19 @@ public class UserController {
     user.setPassword(encoder.encode(user.getPassword()));
 
     return repo.save(user); }
+  //kollar så allt matchar
+  @PostMapping("/login")//<?> om det returnener olika för olika siruationer?
+  public ResponseEntity<?> Login(@RequestBody User loginUser){
+
+    User userDb = repo.findByName(loginUser.getName());
+
+    if (userDb == null){
+      return ResponseEntity.status(401).body("hittar inte användarnamnet")
+    }
+
+    if (!encoder.matches(loginUser.getPassword(),userDb.getPassword())){
+      return ResponseEntity.status(401).body("fel lösen");
+    }
+    return ResponseEntity.ok(userDb);
+  }
 }

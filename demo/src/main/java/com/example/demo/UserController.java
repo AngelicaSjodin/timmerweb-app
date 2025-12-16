@@ -32,12 +32,19 @@ public class UserController {
 
   @PostMapping("/register")
   public ResponseEntity<?>register(@RequestBody User user){ 
-    if (repo.findByName(user.getName()) != null) {
-            return ResponseEntity.status(400).body(Map.of("message","användare finns resan"));
+    String name = user.getName() == null ? "" : user.getName().trim();
+    user.setName(name);
+
+    if (name.isEmpty()) {
+      return ResponseEntity.status(400).body(Map.of("message","användarenman saknas"));
     }
+
+    if(repo.findByName(name)!= null){
+      return ResponseEntity.status(400).body(Map.of("message", "användare finns redan"));
+    }
+
       // Hasha lösenord
     user.setPassword(encoder.encode(user.getPassword()));
-
     repo.save(user);
 
     return ResponseEntity.ok(Map.of("message","Konto skapat"));
@@ -47,16 +54,19 @@ public class UserController {
   //kollar så allt matchar
   @PostMapping("/login")//<?> om det returnener olika för olika siruationer?
   public ResponseEntity<?> login(@RequestBody User loginUser){
-
-    User userDb = repo.findByName(loginUser.getName());
+    String name = loginUser.getName() == null ? "" : loginUser.getName().trim();
+    String password = loginUser.getPassword() == null ? "" : loginUser.getPassword();
+    
+    User userDb = repo.findByName(name);
+    
 
     if (userDb == null){
-      return ResponseEntity.status(401).body("hittar inte användarnamnet");
+      return ResponseEntity.status(401).body(Map.of("message","hittar inte användarnamnet"));
     }
 
-    if (!encoder.matches(loginUser.getPassword(),userDb.getPassword())){
-      return ResponseEntity.status(401).body("fel lösen");
+    if (!encoder.matches(password, userDb.getPassword())){
+      return ResponseEntity.status(401).body(Map.of("message","fel lösen"));
     }
-    return ResponseEntity.ok("inloggning ok");
+    return ResponseEntity.ok(Map.of("message","inloggning ok"));
   }
 }

@@ -18,7 +18,7 @@ public class UserController {
   private final UserRepository repo;
   private final PasswordEncoder encoder;
 
-  public UserController(UserRepository repo){ 
+  public UserController(UserRepository repo, PasswordEncoder encoder){ //auto injection från security config
     this.repo = repo; 
     this.encoder = encoder;
     }
@@ -40,7 +40,7 @@ public class UserController {
     User userDb = repo.findByName(loginUser.getName());
 
     if (userDb == null){
-      return ResponseEntity.status(401).body("hittar inte användarnamnet")
+      return ResponseEntity.status(401).body("hittar inte användarnamnet");
     }
 
     if (!encoder.matches(loginUser.getPassword(),userDb.getPassword())){

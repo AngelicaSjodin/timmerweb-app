@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = "http://localhost:4200")
 
 public class UserController {
   private final UserRepository repo;
